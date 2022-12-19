@@ -6,12 +6,21 @@ const jwt = require('jsonwebtoken');
 
 router.post('/register', (req, res) => {
   const { email, password } = req.body;
+
+  // if req.body empty
   if (!email || !password) {
     return res.status(422).send({
       err: 'Please supply email and password'
     });
   }
 
+  // If email taken
+  const duplicateUser = User.findOne({ email });
+  if (duplicateUser) return res.status(400).send({
+    err: 'Something went wrong!!!'
+  });
+
+  // if new user email
   bcrypt.hash(password, 8, (err, hash) => {
     User.create({
       email,
@@ -25,7 +34,7 @@ router.post('/register', (req, res) => {
         { expiresIn: 86400 }
       );
 
-      res.send({ token });
+      return res.send({ token });
     });
   });
 });
@@ -57,7 +66,7 @@ router.post('/login', (req, res) => {
         process.env.SECRET,
         { expiresIn: 86400 }
       );
-      res.send({ token });
+      return res.send({ token });
     });
   });
 });
