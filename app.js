@@ -3,15 +3,15 @@ dotenv.config();
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 
-const PORT = process.env.PORT
-const DB_STRING = process.env.DB_STRING
+const PORT = process.env.PORT;
+const DB_STRING = process.env.DB_STRING;
 
-
+mongoose.set('strictQuery', true);
 mongoose.connect(
   DB_STRING,
   {
@@ -25,4 +25,4 @@ app.use(express.json());
 
 app.use(authRoutes);
 
-app.listen(PORT, () => console.log(`API listening at http://localhost:${PORT}!`))
+app.listen(PORT, () => console.log(`API listening at http://localhost:${PORT}!`));
