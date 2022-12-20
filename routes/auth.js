@@ -14,11 +14,12 @@ router.post('/register', (req, res) => {
     });
   }
 
-  // If email taken
-  const duplicateUser = User.findOne({ email });
-  if (duplicateUser) return res.status(400).send({
-    err: 'Something went wrong!!!'
-  });
+  // TODO: If email taken 
+  // const duplicateUser = User.findOne({ email });
+  // console.log("duplicateUser:", duplicateUser);
+  // if (duplicateUser) return res.status(400).send({
+  //   err: 'Something went wrong!!!'
+  // });
 
   // if new user email
   bcrypt.hash(password, 8, (err, hash) => {
