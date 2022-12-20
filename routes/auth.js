@@ -25,7 +25,13 @@ router.post('/register', (req, res) => {
   bcrypt.hash(password, 8, (err, hash) => {
     User.create({
       email,
-      password: hash
+      password: hash,
+      profile: {
+        firstName: '',
+        lastName: '',
+        gender: '',
+        yearOfBirth: ''
+      }
     }, (err, user) => {
       if (err) return res.status(400).send(err);
 

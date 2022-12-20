@@ -13,7 +13,7 @@ const UserSchema = new Schema({
       firstName: String,
       lastName: String,
       gender: String,
-      yearOfBirth: Number
+      yearOfBirth: String
     }
   }
 });

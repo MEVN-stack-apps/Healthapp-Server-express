@@ -38,9 +38,10 @@ router.get('/profile', authenticated, (req, res) => {
   res.send({ "msg": "in profile route" });
 });
 
-router.post('/profile', authenticated, (req, res) => {
+router.post('/profile', authenticated, async (req, res) => {
   const { firstName, lastName, gender, yearOfBirth } = req.body;
-  const user = req.user;
+  const user = req.readerUser;
+  let userUpdate = {};
 
   if (!firstName || !lastName || !gender || !yearOfBirth) {
     return res.status(422).send({
@@ -48,14 +49,18 @@ router.post('/profile', authenticated, (req, res) => {
     });
   }
 
-  user.profile.push({
-    firstName, lastName, gender, yearOfBirth
-  });
-  user.firstName = firstName;
+  userUpdate = {
+    profile: {
+      firstName,
+      lastName,
+      gender,
+      yearOfBirth,
+    }
+  };
 
-  user.save();
+  await User.updateOne({ _id: user._id, }, { $set: userUpdate });
 
-  res.send({ profile: user.profile });
+  res.send({ profile: userUpdate });
 });
 
 module.exports = router;
