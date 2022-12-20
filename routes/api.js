@@ -35,11 +35,7 @@ function authenticated(req, res, next) {
 }
 
 router.get('/profile', authenticated, async (req, res) => {
-  const id = req.readerUser.id;
-  console.log("id:", id);
-  const userFound = await User.findById({ _id: id });
-  console.log("userFound:", userFound);
-  res.send(userFound);
+  res.send({ profile: req.readerUser.profile });
 });
 
 router.post('/profile', authenticated, async (req, res) => {
