@@ -7,10 +7,15 @@ const UserSchema = new Schema({
     unique: true
   },
   password: String,
-  firstName: String,
-  lastName: String,
-  gender: String,
-  birthYear: Number
+  profile: {
+    type: Object,
+    properties: {
+      firstName: String,
+      lastName: String,
+      gender: String,
+      yearOfBirth: Number
+    }
+  }
 });
 
 const User = mongoose.model('users', UserSchema);
