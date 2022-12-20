@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth');
 const apiRoutes = require('./routes/api');
+const apimedicRoutes = require('./routes/apimedicRoutes');
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use(express.json());
 
 app.use(authRoutes);
 app.use(apiRoutes);
+app.use(apimedicRoutes);
 
 app.listen(PORT, () => console.log(`API listening at http://localhost:${PORT}!`));
