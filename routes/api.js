@@ -34,8 +34,12 @@ function authenticated(req, res, next) {
   });
 }
 
-router.get('/profile', authenticated, (req, res) => {
-  res.send({ "msg": "in profile route" });
+router.get('/profile', authenticated, async (req, res) => {
+  const id = req.readerUser.id;
+  console.log("id:", id);
+  const userFound = await User.findById({ _id: id });
+  console.log("userFound:", userFound);
+  res.send(userFound);
 });
 
 router.post('/profile', authenticated, async (req, res) => {
@@ -60,7 +64,9 @@ router.post('/profile', authenticated, async (req, res) => {
 
   await User.updateOne({ _id: user._id, }, { $set: userUpdate });
 
-  res.send({ profile: userUpdate });
+  userUpdate.id = user._id;
+
+  res.send(userUpdate);
 });
 
 module.exports = router;
