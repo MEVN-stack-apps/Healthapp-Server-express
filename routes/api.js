@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { User } = require('./../models/user');
-const jwt = require('jsonwebtoken');
+const { User } = require("./../models/user");
+const jwt = require("jsonwebtoken");
 
 // middleware
 function authenticated(req, res, next) {
-  const header = req.get('Authorization') ?? '';
-  const noAuth = { err: 'Invalid Token', noAuth: true };
+  const header = req.get("Authorization") ?? "";
+  const noAuth = { err: "Invalid Token", noAuth: true };
 
-  if (header.toLowerCase().indexOf('bearer') === -1) {
+  if (header.toLowerCase().indexOf("bearer") === -1) {
     return res.status(401).send(noAuth);
   }
 
-  const token = header.split(' ')[1];
+  const token = header.split(" ")[1];
 
   if (!token) {
     return res.status(401).send(noAuth);
@@ -34,18 +34,18 @@ function authenticated(req, res, next) {
   });
 }
 
-router.get('/profile', authenticated, async (req, res) => {
+router.get("/profile", authenticated, async (req, res) => {
   res.send({ profile: req.readerUser.profile });
 });
 
-router.post('/profile', authenticated, async (req, res) => {
+router.post("/profile", authenticated, async (req, res) => {
   const { firstName, lastName, gender, yearOfBirth } = req.body;
   const user = req.readerUser;
   let userUpdate = {};
 
   if (!firstName || !lastName || !gender || !yearOfBirth) {
     return res.status(422).send({
-      err: 'Please fill the fields'
+      err: "Please fill the fields",
     });
   }
 
@@ -55,10 +55,10 @@ router.post('/profile', authenticated, async (req, res) => {
       lastName,
       gender,
       yearOfBirth,
-    }
+    },
   };
 
-  await User.updateOne({ _id: user._id, }, { $set: userUpdate });
+  await User.updateOne({ _id: user._id }, { $set: userUpdate });
 
   userUpdate.id = user._id;
 
@@ -66,6 +66,3 @@ router.post('/profile', authenticated, async (req, res) => {
 });
 
 module.exports = router;
-
-
-

@@ -10,36 +10,47 @@ const getToken = async (req, res) => {
 
 const getSymptoms = async (req, res) => {
   const token = await getToken();
-  const params = { name: 'symptoms' };
+  const params = { name: "symptoms" };
   const symptomsDataset = await loadData(params, token);
 
-  if (!symptomsDataset) res.status(500).json({ message: 'Error on getting symptoms from apimedic' });
-  return res.json({ status: symptomsDataset.status, symptomsDataset: symptomsDataset.data });
+  if (!symptomsDataset)
+    res
+      .status(500)
+      .json({ message: "Error on getting symptoms from apimedic" });
+  return res.json({
+    status: symptomsDataset.status,
+    symptomsDataset: symptomsDataset.data,
+  });
 };
 
 const getIssues = async (req, res) => {
   const token = await getToken();
-  const params = { name: 'issues' };
+  const params = { name: "issues" };
   const issuesDataset = await loadData(params, token);
 
-  if (!issuesDataset) res.status(500).json({ message: 'Error on getting issues from apimedic' });
-  return res.json({ status: issuesDataset.status, issuesDataset: issuesDataset.data });
+  if (!issuesDataset)
+    res.status(500).json({ message: "Error on getting issues from apimedic" });
+  return res.json({
+    status: issuesDataset.status,
+    issuesDataset: issuesDataset.data,
+  });
 };
 
 const getOneIssue = async (req, res) => {
   const token = await getToken();
-  const params = { name: 'issues', id: req.params.id };
+  const params = { name: "issues", id: req.params.id };
 
   const issue = await loadData(params, token);
 
-  if (!issue) res.status(500).json({ message: 'Error on getting issues from apimedic' });
+  if (!issue)
+    res.status(500).json({ message: "Error on getting issues from apimedic" });
   return res.json({ status: issue.status, issue: issue.data });
 };
 
 const getDiagnosis = async (req, res) => {
   const token = await getToken();
   const params = {
-    name: 'diagnosis',
+    name: "diagnosis",
     symptoms: req.query.symptoms,
     gender: req.query.gender,
     yearOfBirth: req.query.yearOfBirth,
@@ -48,14 +59,17 @@ const getDiagnosis = async (req, res) => {
   // console.log("params in func:", params)
   const diagnosis = await loadData(params, token);
 
-  if (!diagnosis) res.status(500).json({ message: 'Error on getting diagnosis from apimedic' });
+  if (!diagnosis)
+    res
+      .status(500)
+      .json({ message: "Error on getting diagnosis from apimedic" });
   return res.json({ status: diagnosis.status, diagnosis: diagnosis.data });
 };
 
 const getSpecialisations = async (req, res) => {
   const token = await getToken();
   const params = {
-    name: 'diagnosis/specialisations',
+    name: "diagnosis/specialisations",
     symptoms: req.query.symptoms,
     gender: req.query.gender,
     yearOfBirth: req.query.yearOfBirth,
@@ -64,14 +78,20 @@ const getSpecialisations = async (req, res) => {
   // console.log("params in func:", params)
   const specialisations = await loadData(params, token);
 
-  if (!specialisations) res.status(500).json({ message: 'Error on getting specialisations from apimedic' });
-  return res.json({ status: specialisations.status, specialisations: specialisations.data });
+  if (!specialisations)
+    res
+      .status(500)
+      .json({ message: "Error on getting specialisations from apimedic" });
+  return res.json({
+    status: specialisations.status,
+    specialisations: specialisations.data,
+  });
 };
 
 const getProposedSymptoms = async (req, res) => {
   const token = await getToken();
   const params = {
-    name: 'symptoms/proposed',
+    name: "symptoms/proposed",
     symptoms: req.query.symptoms,
     gender: req.query.gender,
     yearOfBirth: req.query.yearOfBirth,
@@ -80,42 +100,63 @@ const getProposedSymptoms = async (req, res) => {
   // console.log("params in func:", params)
   const proposedSymptoms = await loadData(params, token);
 
-  if (!proposedSymptoms) res.status(500).json({ message: 'Error on getting proposedSymptoms from apimedic' });
-  return res.json({ status: proposedSymptoms.status, proposedSymptoms: proposedSymptoms.data });
+  if (!proposedSymptoms)
+    res
+      .status(500)
+      .json({ message: "Error on getting proposedSymptoms from apimedic" });
+  return res.json({
+    status: proposedSymptoms.status,
+    proposedSymptoms: proposedSymptoms.data,
+  });
 };
 
 const getBodyLocations = async (req, res) => {
   const token = await getToken();
-  const params = { name: 'body/locations' };
+  const params = { name: "body/locations" };
   const bodyLocations = await loadData(params, token);
 
-  if (!bodyLocations) res.status(500).json({ message: 'Error on getting bodyLocations from apimedic' });
-  return res.json({ status: bodyLocations.status, bodyLocations: bodyLocations.data });
+  if (!bodyLocations)
+    res
+      .status(500)
+      .json({ message: "Error on getting bodyLocations from apimedic" });
+  return res.json({
+    status: bodyLocations.status,
+    bodyLocations: bodyLocations.data,
+  });
 };
 
 const getOneLocation = async (req, res) => {
   const token = await getToken();
-  const params = { name: 'body/locations', id: req.params.id };
+  const params = { name: "body/locations", id: req.params.id };
 
   const location = await loadData(params, token);
 
-  if (!location) res.status(500).json({ message: 'Error on getting locations from apimedic' });
+  if (!location)
+    res
+      .status(500)
+      .json({ message: "Error on getting locations from apimedic" });
   return res.json({ status: location.status, location: location.data });
 };
 
 const getBodySymptoms = async (req, res) => {
   const token = await getToken();
   const params = {
-    name: 'symptoms',
+    name: "symptoms",
     locationId: req.query.locationId,
     gender: req.query.gender,
   };
 
-  console.log("params.gender in func:", params.gender);
+  console.log("params in util:", params);
   const bodySymptoms = await loadData(params, token);
 
-  if (!bodySymptoms) res.status(500).json({ message: 'Error on getting bodySymptoms from apimedic' });
-  return res.json({ status: bodySymptoms.status, bodySymptoms: bodySymptoms.data });
+  if (!bodySymptoms)
+    res
+      .status(500)
+      .json({ message: "Error on getting bodySymptoms from apimedic" });
+  return res.json({
+    status: bodySymptoms.status,
+    bodySymptoms: bodySymptoms.data,
+  });
 };
 
 module.exports = {
@@ -127,5 +168,5 @@ module.exports = {
   getProposedSymptoms,
   getBodyLocations,
   getOneLocation,
-  getBodySymptoms
+  getBodySymptoms,
 };

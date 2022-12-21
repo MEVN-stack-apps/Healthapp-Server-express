@@ -1,6 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getSymptoms,
+const {
+  getSymptoms,
   getIssues,
   getOneIssue,
   getDiagnosis,
@@ -8,7 +9,8 @@ const { getSymptoms,
   getProposedSymptoms,
   getBodyLocations,
   getOneLocation,
-  getBodySymptoms } = require("../utils/thirdParty/apimedic");
+  getBodySymptoms,
+} = require("../utils/thirdParty/apimedic");
 
 router.get("/symptoms", getSymptoms);
 router.get("/issues", getIssues);
@@ -19,6 +21,5 @@ router.get("/symptoms/proposed", getProposedSymptoms); // required: symptoms ids
 router.get("/locations", getBodyLocations);
 router.get("/locations/:id", getOneLocation); // required: id
 router.get("/body/symptoms", getBodySymptoms); // required: location id, gender
-
 
 module.exports = router;
